@@ -19,6 +19,7 @@ const db = mysql.createPool({
   database: process.env.DB_NAME,
   connectionLimit: 10,
   queueLimit: 0
+  
 });
 
 // Prueba de conexión a la base de datos

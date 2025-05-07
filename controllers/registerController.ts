@@ -15,7 +15,7 @@ let register = async (req: Request, res: Response) => {
       );
   
       console.log("✅ Usuario registrado con éxito ");
-  
+
       return res.status(201).json({ status: "register ok" });
     } catch (error: any) {
       console.error("❌ Error al registrar usuario:", error);
