@@ -8,6 +8,7 @@ import searchRoutes from './routes/searchProperty';
 import agendaRoutes from './routes/Agenda';
 import iaRoute from './routes/iaRoutes';
 import adminRoutes from './routes/adminRoutes';
+import invitationRoutes from './routes/invitacionRoutes';
 
 
 dotenv.config();
@@ -23,6 +24,8 @@ app.use('/', searchRoutes);
 app.use('/agenda', agendaRoutes);
 app.use('/ia', iaRoute);
 app.use("/api", adminRoutes);
+app.use('/api/invitacion', invitationRoutes);
+
 
 // Verificar API key
 if (!process.env.GEMINI_API_KEY) {
