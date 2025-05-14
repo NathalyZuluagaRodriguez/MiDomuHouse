@@ -1,30 +1,42 @@
 import express from 'express';
 import dotenv from "dotenv";
 import cors from "cors";
-import register from './routes/register';
 import login from './routes/login';
 import rolesRoutes from './routes/roles';
 import searchRoutes from './routes/searchProperty';
 import agendaRoutes from './routes/Agenda';
 import iaRoute from './routes/iaRoutes';
 import adminRoutes from './routes/adminRoutes';
-import invitationRoutes from './routes/invitacionRoutes';
+import invitacionRoutes from './routes/invitacionRoutes';
+import passwordRoutes from './routes/passwordRoutes';
+import registroRoutes from './routes/confirmacionRoutes';
+import agentRoutes from "./routes/agentRoutes";
+import  propertyRoutes  from './routes/agentRoutes'
+import  ventasAlquileresRoute  from './routes/agentRoutes'
+import reporteRoutes from './routes/agentRoutes';
 
-
+ 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.use('/register',register);
 app.use('/login',login);
 app.use('/roles', rolesRoutes);
 app.use('/', searchRoutes);
 app.use('/agenda', agendaRoutes);
 app.use('/ia', iaRoute);
 app.use("/api", adminRoutes);
-app.use('/api/invitacion', invitationRoutes);
+app.use('/api/invitacion', invitacionRoutes);
+app.use('/api/password', passwordRoutes);
+app.use('/api/registro', registroRoutes);
+app.use('/api/admin', adminRoutes);
+app.use("/api", agentRoutes);
+app.use("/api", propertyRoutes); 
+app.use("/api", ventasAlquileresRoute);
+app.use(reporteRoutes);
+
 
 
 // Verificar API key

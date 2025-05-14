@@ -17,20 +17,17 @@ class usuarioServi {
         return await UserRepository.buscarUsuario(login);
     }
 
-    static async registerAgent(agent: Agent) {
+   static async registerAgent(agent: Agent) {
         try {
-            console.log("🟡 Agente recibido en servicio:", agent);
-
-            // Encriptar la contraseña como con register
-            agent.password = await generateHash(agent.password);
-
-            // Lógica para guardar agente, si tienes un repositorio específico para agentes
-            return await UserRepository.createAgente(agent);
+          console.log("Agente recibido en servicio:", agent);
+          agent.password = await generateHash(agent.password);
+          return await UserRepository.createAgente(agent);
         } catch (error) {
-            console.error('Error al registrar agente:', error);
-            throw new Error('No se pudo registrar el agente');
+          console.error('Error al registrar agente:', error);
+          throw new Error('No se pudo registrar el agente');
         }
-    }
+      }
+
 }
 
 export default usuarioServi;

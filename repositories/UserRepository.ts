@@ -14,18 +14,6 @@ class usuarioRepo {
       return db.execute(sql, values);
   }
 
-  static async createAgente(agente: Agent) {
-    const sql = 'CALL CrearAgente(?, ?, ?, ?, ?, ?)';
-    const values = [
-      agente.nombre,
-      agente.email,
-      agente.telefono,
-      agente.password,
-      agente.inmobiliariaId,
-      agente.id_rol
-    ];
-    return db.execute(sql, values);
-  }
     
   static async buscarUsuario(login: Login) {
     const sql = 'call loginUsuario(?)';
@@ -55,5 +43,26 @@ class usuarioRepo {
 
   }
 
+static async createAgente(agente: Agent) {
+  const sql = 'CALL CrearAgente(?, ?, ?, ?, ?, ?, ?)';
+  const values = [
+    agente.nombre,
+    agente.apellido,
+    agente.telefono,
+    agente.email,
+    agente.password,
+    agente.id_inmobiliaria,
+    agente.id_rol
+  ];
+  try {
+    const [rows]: any = await db.execute(sql, values);
+    return rows;
+  } catch (error) {
+    console.error("❌ Error ejecutando procedimiento CrearAgente:", error);
+    throw error;
+  }
+}
+
 }
 export default usuarioRepo;
+

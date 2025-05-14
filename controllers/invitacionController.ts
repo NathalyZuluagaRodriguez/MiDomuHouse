@@ -1,27 +1,31 @@
+// controllers/invitacionController.ts
 import { Request, Response } from 'express';
-import { generateInvitationToken } from '../utils/GenerarToken';
+import jwt from 'jsonwebtoken';
+import { guardarTokenInvitacion } from '../repositories/invitacionRepository';
 import { sendInvitationEmail } from '../utils/sendEmailer';
 
-export const generateAgentInvitation = async (req: Request, res: Response) => {
+
+export const generarInvitacion = async (req: Request, res: Response) => {
+  const { correo } = req.body;
+
   try {
-    const { correo, nombre } = req.body;
+    const token = jwt.sign({ correo }, process.env.JWT_SECRET as string, {
+      expiresIn: '1d',
+    });
 
-    if (!correo || !nombre) {
-      return res.status(400).json({ message: 'Nombre y correo son requeridos' });
-    }
-
-    const token = generateInvitationToken({ correo, nombre, rol: 'AGENTE' });
-
-    // Enviar correo con el token
+    // Guardar en la base de datos
+    await guardarTokenInvitacion(token, correo);
     await sendInvitationEmail(correo, token);
 
+
     return res.status(200).json({
-      message: 'Token de invitación generado y enviado por correo exitosamente',
+      message: 'Token de invitación generado y guardado correctamente',
+      token,
     });
   } catch (error) {
     return res.status(500).json({
-      message: 'Error al generar o enviar el token de invitación',
-      error: error instanceof Error ? error.message : error,
+      message: 'Error al generar el token',
+      error: (error as Error).message,
     });
   }
 };

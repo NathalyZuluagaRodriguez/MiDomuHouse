@@ -19,3 +19,13 @@ export const insertAdmin = async (data: AdminData) => {
   const [result] = await db.execute(query, values);
   return result;
 };
+
+
+export const deleteAdmin = async (correo: string) => {
+  const query = `
+    DELETE FROM Persona 
+    WHERE correo = ? AND id_rol = 1
+  `;
+  const [result] = await db.execute(query, [correo]);
+  return result;
+}

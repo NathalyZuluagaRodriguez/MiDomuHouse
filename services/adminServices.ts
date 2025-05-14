@@ -19,6 +19,11 @@ export const registerAdmin = async (adminData: AdminRegisterDto) => {
 
   // ✅ Enviar correo de notificación
   await sendAdminRegisterMail(adminData.correo, adminData.nombre);
-
+  
   return result;
+};
+
+export const eliminarAdmin = async (correo: string) => {
+  const result = await adminRepository.deleteAdmin(correo);
+  return (result as any).affectedRows > 0;
 };
